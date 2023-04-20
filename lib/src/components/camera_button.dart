@@ -22,7 +22,7 @@ class CameraButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            style.galleryButtonIcon ??
+            style.cameraButtonIcon ??
                 Icon(
                   Icons.camera_alt_outlined,
                   color: Theme.of(context).colorScheme.onPrimary,
@@ -30,8 +30,8 @@ class CameraButton extends StatelessWidget {
             const SizedBox(
               width: 16,
             ),
-            Text(style.galleryButtonLabel ?? 'Use a Camera',
-                style: style.galleryButtonTextStyle ?? Theme.of(context).textTheme.titleMedium)
+            Text(style.cameraButtonLabel ?? 'Use a Camera',
+                style: style.cameraButtonTextStyle ?? Theme.of(context).textTheme.titleMedium)
           ],
         ),
       ),
