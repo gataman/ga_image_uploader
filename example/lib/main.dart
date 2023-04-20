@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:flutter/material.dart';
 import 'package:ga_image_uploader/ga_image_uploader.dart';
 
@@ -33,9 +35,9 @@ class HomeView extends StatelessWidget {
       children: [
         ElevatedButton(
             onPressed: () async {
-              final gaFile = await const GaImagePicker(
-                cropEnabled: true,
-              ).pickImage(context: context);
+              final imagePicker = const GaImagePicker(cropEnabled: true);
+
+              final gaFile = await imagePicker.pickImage(context: context);
 
               if (gaFile != null) {
                 final imageBytes = gaFile.bytes; // You can use bytes as dart:io doesn't work in web projects.
