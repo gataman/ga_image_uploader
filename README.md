@@ -53,13 +53,10 @@ Here's an example usage of the package:
 
 ```dart
 final imagePickerOptionsStyle = ImagePickerOptionsStyle(
-  dialogBackgroundColor: context.onPrimary,
-  galleryButtonTextStyle: context.titleMedium?.copyWith(color: context.onPrimary),
-  cameraButtonTextStyle: context.titleMedium?.copyWith(color: context.onPrimary),
-  galleryButtonLabel: 'Galeriden Seç',
-  cameraButtonLabel: 'Kamera ile Çek',
-);
-
+      dialogBackgroundColor: Theme.of(context).colorScheme.onPrimary,
+      galleryButtonTextStyle: Theme.of(context).textTheme.titleMedium,
+      cameraButtonTextStyle: Theme.of(context).textTheme.titleMedium,
+    );
 final imageFile = await GaImagePicker(imagePickerOptionsStyle: imagePickerOptionsStyle).pickImage(context: context);
 ```
 
