@@ -69,4 +69,8 @@ This will open the image picker dialog with the specified options and return a *
 Contributions are welcome. If you find any issues or have suggestions for improvement, please open an issue or pull request.
 
 ## License
-This package is released under the MIT License. See the [LICENSE](https://github.com/gataman/ga_image_uploader/LICENSE) file for details.
+This package is released under the MIT License. See the [LICENSE](https://github.com/gataman/ga_image_uploader/blob/main/LICENSE) file for details.
+
+## Note
+This project is a work in progress and still under development.
+
