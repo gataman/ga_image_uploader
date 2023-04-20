@@ -14,7 +14,7 @@ ga_image_uploader:
 
 
 ## For IOS
-For IOS platform, you should add the following lines to the ios/Runner/Info.plist file:
+For IOS platform, you should add the following lines to the `ios/Runner/Info.plist` file:
 
 ```xml
 <key>NSPhotoLibraryUsageDescription</key>
@@ -52,15 +52,18 @@ If you want to use the cropping feature, add the following lines to the `<head>`
 Here's an example usage of the package:
 
 ```dart
-final imagePickerOptionsStyle = ImagePickerOptionsStyle(
+ final imagePickerOptionsStyle = ImagePickerOptionsStyle(
       dialogBackgroundColor: Theme.of(context).colorScheme.onPrimary,
       galleryButtonTextStyle: Theme.of(context).textTheme.titleMedium,
       cameraButtonTextStyle: Theme.of(context).textTheme.titleMedium,
     );
-final imageFile = await GaImagePicker(imagePickerOptionsStyle: imagePickerOptionsStyle).pickImage(context: context);
+    final imageFile = await GaImagePicker(
+      cropEnabled: true,
+      imagePickerOptionsStyle: imagePickerOptionsStyle,
+    ).pickImage(context: context);
 ```
 
-This will open the image picker dialog with the specified options and return a *\`File\`* object of the selected image. If the cropping feature is enabled, the user will be able to crop the image before it's returned.
+This will open the image picker dialog with the specified options and return a *File* object of the selected image. If the cropping feature is enabled, the user will be able to crop the image before it's returned.
 
 ## Contributions
 Contributions are welcome. If you find any issues or have suggestions for improvement, please open an issue or pull request.

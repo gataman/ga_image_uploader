@@ -1,9 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:universal_io/io.dart';
 
+import 'ga_file.dart';
 import 'image_picker_options.dart';
 import 'style/image_picker_options_style.dart';
 
@@ -45,7 +49,7 @@ class GaImagePicker {
 
   final ImagePickerOptionsStyle? imagePickerOptionsStyle;
 
-  Future<File?> pickImage({required BuildContext context}) async {
+  Future<GAFile?> pickImage({required BuildContext context}) async {
     if (pickerStyle == GaImagePickerType.bottomSheet) {
       return await _showModalBottomSheet(context);
     } else {
@@ -53,7 +57,7 @@ class GaImagePicker {
     }
   }
 
-  Future<File?> _showModalBottomSheet(BuildContext context) {
+  Future<GAFile?> _showModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -82,7 +86,7 @@ class GaImagePicker {
     );
   }
 
-  Future<File?> _showDialog(BuildContext context) {
+  Future<GAFile?> _showDialog(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -107,21 +111,26 @@ class GaImagePicker {
     );
   }
 
-  Future<File?> _uploadImage(ImageSource source, BuildContext context) async {
+  Future<GAFile?> _uploadImage(ImageSource source, BuildContext context) async {
     final image = await ImagePicker().pickImage(source: source);
 
     if (image == null) return null;
 
-    File? img = File(image.path);
+    File? file = File(image.path);
+    Uint8List bytes = await image.readAsBytes();
 
     if (cropEnabled && context.mounted) {
-      img = await _cropImage(img, context);
+      final croppedImg = await _cropImage(file, context);
+      if (croppedImg != null) {
+        file = File(croppedImg.path);
+        bytes = await croppedImg.readAsBytes();
+      }
     }
 
-    return img;
+    return GAFile(file: file, bytes: bytes);
   }
 
-  Future<File?> _cropImage(File imageFile, BuildContext context) async {
+  Future<CroppedFile?> _cropImage(File imageFile, BuildContext context) async {
     CroppedFile? croppedImage = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       cropStyle: CropStyle.circle,
@@ -135,8 +144,7 @@ class GaImagePicker {
         )
       ],
     );
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
+    return croppedImage;
   }
 }
 

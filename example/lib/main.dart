@@ -37,7 +37,8 @@ class HomeView extends StatelessWidget {
                 cropEnabled: true,
                 pickerStyle: GaImagePickerType.bottomSheet,
               ).pickImage(context: context);
-              debugPrint(result?.path);
+              debugPrint(result?.file.path);
+              debugPrint(result?.bytes.toString());
             },
             child: const Text('Upload Image'))
       ],
