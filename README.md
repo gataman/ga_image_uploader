@@ -52,15 +52,12 @@ If you want to use the cropping feature, add the following lines to the `<head>`
 Here's an example usage of the package:
 
 ```dart
- final imagePickerOptionsStyle = ImagePickerOptionsStyle(
-      dialogBackgroundColor: Theme.of(context).colorScheme.onPrimary,
-      galleryButtonTextStyle: Theme.of(context).textTheme.titleMedium,
-      cameraButtonTextStyle: Theme.of(context).textTheme.titleMedium,
-    );
-    final imageFile = await GaImagePicker(
-      cropEnabled: true,
-      imagePickerOptionsStyle: imagePickerOptionsStyle,
-    ).pickImage(context: context);
+      final gaFile = await const GaImagePicker(cropEnabled: true).pickImage(context: context);
+      
+      if(gaFile!=null){
+          final imageBytes = gaFile.bytes; // You can use bytes as dart:io doesn't work in web projects.
+          final imageFile = gaFile.file;
+      }
 ```
 
 This will open the image picker dialog with the specified options and return a *File* object of the selected image. If the cropping feature is enabled, the user will be able to crop the image before it's returned.

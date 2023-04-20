@@ -33,12 +33,14 @@ class HomeView extends StatelessWidget {
       children: [
         ElevatedButton(
             onPressed: () async {
-              final result = await const GaImagePicker(
+              final gaFile = await const GaImagePicker(
                 cropEnabled: true,
-                pickerStyle: GaImagePickerType.bottomSheet,
               ).pickImage(context: context);
-              debugPrint(result?.file.path);
-              debugPrint(result?.bytes.toString());
+
+              if (gaFile != null) {
+                final imageBytes = gaFile.bytes; // You can use bytes as dart:io doesn't work in web projects.
+                final imageFile = gaFile.file;
+              }
             },
             child: const Text('Upload Image'))
       ],
