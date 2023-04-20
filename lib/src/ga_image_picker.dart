@@ -57,7 +57,7 @@ class GaImagePicker {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: imagePickerOptionsStyle?.dialogBackgroundColor,
+      backgroundColor: imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       builder: (context) => DraggableScrollableSheet(
           initialChildSize: 0.28,
@@ -68,7 +68,7 @@ class GaImagePicker {
             return SingleChildScrollView(
               controller: scrollController,
               child: ImagePickerOptions(
-                imagePickerOptionsStyle: ImagePickerOptionsStyle(),
+                imagePickerOptionsStyle: imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
                 onTap: (source) async {
                   final res = await _uploadImage(source, context);
                   if (context.mounted) {
@@ -88,7 +88,7 @@ class GaImagePicker {
       builder: (context) => AlertDialog(
         content: Container(
           decoration: BoxDecoration(
-            color: imagePickerOptionsStyle?.dialogBackgroundColor,
+            color: imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
           //height: 200,
@@ -100,7 +100,7 @@ class GaImagePicker {
               }
             },
             isDialog: true,
-            imagePickerOptionsStyle: ImagePickerOptionsStyle(),
+            imagePickerOptionsStyle: imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
           ),
         ),
       ),
