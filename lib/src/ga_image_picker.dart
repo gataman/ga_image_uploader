@@ -1,15 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:ga_image_uploader/src/ga_file.dart';
+import 'package:ga_image_uploader/src/image_picker_options.dart';
+import 'package:ga_image_uploader/src/style/image_picker_options_style.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:universal_io/io.dart';
-
-import 'ga_file.dart';
-import 'image_picker_options.dart';
-import 'style/image_picker_options_style.dart';
 
 /// A widget that allows the user to select an image from the device's gallery or camera.
 ///
@@ -51,9 +49,9 @@ class GaImagePicker {
 
   Future<GAFile?> pickImage({required BuildContext context}) async {
     if (pickerStyle == GaImagePickerType.bottomSheet) {
-      return await _showModalBottomSheet(context);
+      return _showModalBottomSheet(context);
     } else {
-      return await _showDialog(context);
+      return _showDialog(context);
     }
   }
 
@@ -61,28 +59,33 @@ class GaImagePicker {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+      backgroundColor:
+          imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      ),
       builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.28,
-          maxChildSize: 0.4,
-          minChildSize: 0.28,
-          expand: false,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: ImagePickerOptions(
-                imagePickerOptionsStyle: imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
-                onTap: (source) async {
-                  final res = await _uploadImage(source, context);
-                  if (context.mounted) {
-                    Navigator.pop(context, res);
-                  }
-                },
-                isDialog: false,
-              ),
-            );
-          }),
+        initialChildSize: 0.28,
+        maxChildSize: 0.4,
+        minChildSize: 0.28,
+        expand: false,
+        builder: (context, scrollController) {
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: ImagePickerOptions(
+              imagePickerOptionsStyle:
+                  imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
+              onTap: (source) async {
+                final res = await _uploadImage(source, context);
+                if (context.mounted) {
+                  Navigator.pop(context, res);
+                }
+              },
+              isDialog: false,
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -92,7 +95,8 @@ class GaImagePicker {
       builder: (context) => AlertDialog(
         content: Container(
           decoration: BoxDecoration(
-            color: imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
+            color:
+                imagePickerOptionsStyle?.dialogBackgroundColor ?? Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
           //height: 200,
@@ -104,7 +108,8 @@ class GaImagePicker {
               }
             },
             isDialog: true,
-            imagePickerOptionsStyle: imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
+            imagePickerOptionsStyle:
+                imagePickerOptionsStyle ?? ImagePickerOptionsStyle(),
           ),
         ),
       ),
@@ -117,7 +122,7 @@ class GaImagePicker {
     if (image == null) return null;
 
     File? file = File(image.path);
-    Uint8List bytes = await image.readAsBytes();
+    var bytes = await image.readAsBytes();
 
     if (cropEnabled && context.mounted) {
       final croppedImg = await _cropImage(file, context);
@@ -131,11 +136,11 @@ class GaImagePicker {
   }
 
   Future<CroppedFile?> _cropImage(File imageFile, BuildContext context) async {
-    CroppedFile? croppedImage = await ImageCropper().cropImage(
+    final croppedImage = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       cropStyle: CropStyle.circle,
       uiSettings: [
-        IOSUiSettings(resetAspectRatioEnabled: true),
+        IOSUiSettings(),
         WebUiSettings(
           context: context,
           enableZoom: true,
