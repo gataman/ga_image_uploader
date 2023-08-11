@@ -52,7 +52,6 @@ If you want to use the cropping feature, add the following lines to the `<head>`
 Here's an example usage of the package:
 
 ```dart
-    final imagePicker = const ; 
     final gaFile =  await GaImagePicker(cropEnabled: true).pickImage(context: context);
       if (gaFile != null) {
         final imageBytes = gaFile.bytes; // You can use bytes as dart:io doesn't work in web projects.
