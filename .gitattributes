@@ -1,0 +1,6 @@
+*.dart linguist-language=Dart
+*.cpp linguist-generated=true
+*.h linguist-generated=true
+*.cmake linguist-generated=true
+android/app/src/main/cpp/* linguist-generated=true
+ios/Runner/* linguist-generated=true
